@@ -105,39 +105,125 @@
         }
         .redo-btn:hover { background: var(--blue); color: white; }
 
-        /* FLASHCARD EXERCISE */
-        .flashcard-stack { }
-        .fc-card {
-            background: white; border-radius: 20px; padding: 36px 28px; text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1); margin-bottom: 16px;
-            cursor: pointer; perspective: 1000px; position: relative; min-height: 200px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        /* FLASHCARD EXERCISE - style giống main.html */
+        .flashcard-stack { display: flex; flex-direction: column; align-items: center; }
+
+        /* Progress bar */
+        .fc-progress-bar-wrap {
+            width: 100%; max-width: 480px; height: 6px;
+            background: #e2e8f0; border-radius: 99px; margin-bottom: 20px; overflow: hidden;
         }
+        .fc-progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--blue), #7c3aed);
+            border-radius: 99px; transition: width 0.4s ease;
+        }
+
+        /* The card wrapper — holds perspective */
+        .fc-card {
+            width: 100%; max-width: 480px; height: 300px;
+            perspective: 1000px; margin: 0 auto 10px; cursor: pointer;
+        }
+
+        /* Inner — flips */
         .fc-card-inner {
-            width: 100%; transition: transform 0.5s; transform-style: preserve-3d; position: relative;
+            width: 100%; height: 100%; position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4,0.2,0.2,1);
         }
         .fc-card.flipped .fc-card-inner { transform: rotateY(180deg); }
+
+        /* Front & Back shared */
         .fc-front, .fc-back {
-            backface-visibility: hidden; width: 100%;
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 20px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 28px 24px; box-sizing: border-box;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
         }
-        .fc-back { transform: rotateY(180deg); position: absolute; top: 0; left: 0; }
-        .fc-word { font-size: 2rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
-        .fc-phonetic { color: #64748b; font-size: 1rem; margin-bottom: 12px; }
-        .fc-hint { color: #94a3b8; font-size: 0.85rem; }
-        .fc-meaning { font-size: 1.3rem; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
-        .fc-example { color: #475569; font-size: 0.95rem; font-style: italic; margin-bottom: 6px; }
-        .fc-trans { color: #94a3b8; font-size: 0.85rem; }
+
+        /* Front: gradient tím-xanh như main.html */
+        .fc-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .fc-front .fc-word {
+            font-size: 2.4rem; font-weight: 800; color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2); margin-bottom: 10px; text-align: center;
+        }
+        .fc-front .fc-phonetic {
+            font-size: 1rem; color: rgba(255,255,255,0.82); margin-bottom: 14px; letter-spacing: 1px;
+        }
+        .fc-front .fc-hint {
+            font-size: 0.82rem; color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.12); padding: 5px 14px; border-radius: 20px;
+        }
+
+        /* Back: gradient hồng-đỏ như main.html */
+        .fc-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white; transform: rotateY(180deg);
+            justify-content: flex-start; overflow-y: auto;
+        }
+        .fc-back .fc-meaning {
+            font-size: 1.5rem; font-weight: 800; color: white;
+            text-align: center; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .fc-back .fc-phonetic-back {
+            font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 14px;
+        }
+        .fc-back .fc-example {
+            font-style: italic; font-size: 0.95rem; color: rgba(255,255,255,0.9);
+            text-align: center; margin-bottom: 5px;
+        }
+        .fc-back .fc-trans {
+            font-size: 0.82rem; color: rgba(255,255,255,0.72); text-align: center; margin-bottom: 18px;
+        }
+
+        /* Back actions — Học lại / Đã nhớ */
+        .back-actions {
+            display: flex; justify-content: space-around; width: 100%; margin-top: auto; gap: 12px;
+        }
+        .back-actions .fc-btn {
+            flex: 1; padding: 11px 0; border-radius: 30px; cursor: pointer;
+            color: white; font-weight: 700; font-size: 15px; border: none;
+            transition: all 0.25s; text-align: center;
+        }
+        .fc-btn-wrong { background: rgba(244,67,54,0.82); }
+        .fc-btn-wrong:hover { background: #e53935; transform: scale(1.04); }
+        .fc-btn-right  { background: rgba(76,175,80,0.85); }
+        .fc-btn-right:hover  { background: #43a047; transform: scale(1.04); }
+
+        /* Bottom nav */
         .fc-nav {
-            display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 14px; margin-top: 18px; width: 100%; max-width: 480px;
         }
         .fc-nav button {
             background: white; border: 2px solid var(--blue-light); color: var(--blue);
-            padding: 10px 24px; border-radius: 30px; font-weight: 700; cursor: pointer;
-            font-size: 15px; transition: all 0.2s;
+            padding: 10px 26px; border-radius: 30px; font-weight: 700; cursor: pointer;
+            font-size: 15px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(37,99,235,0.1);
         }
-        .fc-nav button:hover { background: var(--blue); color: white; border-color: var(--blue); }
-        .fc-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
-        .fc-counter { color: #94a3b8; font-size: 0.9rem; min-width: 60px; text-align: center; }
+        .fc-nav button:hover:not([disabled]) { background: var(--blue); color: white; border-color: var(--blue); }
+        .fc-nav button[disabled] { opacity: 0.35; cursor: not-allowed; }
+        .fc-counter { color: #94a3b8; font-size: 0.9rem; min-width: 64px; text-align: center; font-weight: 600; }
+
+        /* Known / redo counters */
+        .fc-score {
+            display: flex; gap: 16px; justify-content: center; margin-top: 16px;
+            font-size: 13px; font-weight: 700;
+        }
+        .fc-score-known { color: var(--green); }
+        .fc-score-redo   { color: var(--red); }
+
+        /* Completion card */
+        .fc-complete {
+            background: white; border-radius: 20px; padding: 40px 28px; text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08); max-width: 480px; margin: 0 auto;
+        }
+        .fc-complete h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; color: #1e293b; }
+        .fc-complete p  { color: #64748b; margin-bottom: 22px; }
+        .fc-complete .fc-big-score { font-size: 3rem; font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 6px; }
 
         /* ESSAY EXERCISE */
         .essay-block {
@@ -405,30 +491,48 @@ Trả về JSON hợp lệ (không có markdown, chỉ JSON thuần):
             catch { throw new Error('AI trả về dữ liệu không hợp lệ'); }
 
             fcCards = data.cards || [];
-            fcIndex = 0;
+            fcIndex = 0; fcKnown = 0; fcRedo = 0;
             document.getElementById('result-title').textContent = '🃏 Flashcard: ' + topic;
             document.getElementById('result-meta').textContent = `${fcCards.length} thẻ · Trình độ ${level} · Bấm vào thẻ để lật`;
             renderFlashcard();
         }
 
+        // track known/redo
+        let fcKnown = 0, fcRedo = 0;
+
         function renderFlashcard() {
             if (!fcCards.length) { document.getElementById('exercise-area').innerHTML = '<p>Không có thẻ nào.</p>'; return; }
-            const c = fcCards[fcIndex];
-            document.getElementById('exercise-area').innerHTML = `
+            const card = fcCards[fcIndex];
+            const pct = Math.round(((fcIndex) / fcCards.length) * 100);
+            const area = document.getElementById('exercise-area');
+
+            area.innerHTML = `
                 <div class="flashcard-stack">
-                    <div class="fc-card" id="fc-main" onclick="document.getElementById('fc-main').classList.toggle('flipped')">
-                        <div class="fc-card-inner">
+                    <div class="fc-progress-bar-wrap">
+                        <div class="fc-progress-bar" id="fc-pbar" style="width:${pct}%"></div>
+                    </div>
+                    <div class="fc-card" id="fc-main">
+                        <div class="fc-card-inner" id="fc-inner">
                             <div class="fc-front">
-                                <div class="fc-word">${c.word}</div>
-                                <div class="fc-phonetic">${c.phonetic || ''}</div>
-                                <div class="fc-hint">👆 Bấm để xem nghĩa</div>
+                                <div class="fc-word">${card.word}</div>
+                                ${card.phonetic ? `<div class="fc-phonetic">/${card.phonetic}/</div>` : ''}
+                                <div class="fc-hint">👆 Bấm để lật thẻ</div>
                             </div>
                             <div class="fc-back">
-                                <div class="fc-meaning">${c.meaning}</div>
-                                <div class="fc-example">"${c.example || ''}"</div>
-                                <div class="fc-trans">${c.exampleTranslation || ''}</div>
+                                <div class="fc-meaning">${card.meaning}</div>
+                                ${card.phonetic ? `<div class="fc-phonetic-back">/${card.phonetic}/</div>` : ''}
+                                ${card.example ? `<div class="fc-example">"${card.example}"</div>` : ''}
+                                ${card.exampleTranslation ? `<div class="fc-trans">→ ${card.exampleTranslation}</div>` : ''}
+                                <div class="back-actions">
+                                    <button class="fc-btn fc-btn-wrong" onclick="fcAction('redo')">🔄 Học lại</button>
+                                    <button class="fc-btn fc-btn-right" onclick="fcAction('known')">✅ Đã nhớ</button>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="fc-score">
+                        <span class="fc-score-known">✅ Đã nhớ: ${fcKnown}</span>
+                        <span class="fc-score-redo">🔄 Học lại: ${fcRedo}</span>
                     </div>
                     <div class="fc-nav">
                         <button onclick="fcNav(-1)" ${fcIndex===0?'disabled':''}>← Trước</button>
@@ -436,9 +540,55 @@ Trả về JSON hợp lệ (không có markdown, chỉ JSON thuần):
                         <button onclick="fcNav(1)" ${fcIndex===fcCards.length-1?'disabled':''}>Tiếp →</button>
                     </div>
                 </div>`;
+
+            // click card to flip (không click vào nút back-actions)
+            const fcMain = document.getElementById('fc-main');
+            if (fcMain) {
+                fcMain.addEventListener('click', function(e) {
+                    if (!e.target.closest('.back-actions')) {
+                        fcMain.classList.toggle('flipped');
+                    }
+                });
+            }
+        }
+
+        function fcAction(type) {
+            if (type === 'known') fcKnown++;
+            else fcRedo++;
+            // auto next, or show completion
+            if (fcIndex < fcCards.length - 1) {
+                fcIndex++;
+                renderFlashcard();
+            } else {
+                showFcComplete();
+            }
+        }
+
+        function showFcComplete() {
+            const area = document.getElementById('exercise-area');
+            const total = fcCards.length;
+            const pct = Math.round((fcKnown / total) * 100);
+            area.innerHTML = `
+                <div class="fc-complete">
+                    <div style="font-size:3rem;margin-bottom:12px;">🎉</div>
+                    <h2>Hoàn thành!</h2>
+                    <div class="fc-big-score">${pct}%</div>
+                    <p>Bạn đã nhớ <strong>${fcKnown}/${total}</strong> từ trong bộ thẻ này</p>
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                        <button onclick="fcKnown=0;fcRedo=0;fcIndex=0;renderFlashcard()" 
+                            style="background:linear-gradient(105deg,var(--blue),var(--blue-dark));color:white;border:none;padding:12px 26px;border-radius:30px;font-weight:700;cursor:pointer;font-size:15px;box-shadow:0 4px 14px rgba(37,99,235,0.3)">
+                            🔄 Học lại từ đầu
+                        </button>
+                        <button onclick="openSetup('flashcard')" 
+                            style="background:white;color:var(--blue);border:2px solid var(--blue-light);padding:12px 26px;border-radius:30px;font-weight:700;cursor:pointer;font-size:15px;">
+                            ✨ Tạo bộ mới
+                        </button>
+                    </div>
+                </div>`;
         }
 
         function fcNav(dir) {
+            fcKnown=0; fcRedo=0;
             fcIndex = Math.max(0, Math.min(fcCards.length-1, fcIndex+dir));
             renderFlashcard();
         }
