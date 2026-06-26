@@ -1019,15 +1019,9 @@
         // ============================================================
         // HÀM LẤY API KEY
         // ============================================================
-        function getAPIKey() {
-            const originalKey = "v6xGqEar3C7yKR9K2GmO5dTZx2OLCg258qLWdF5o7kt5ImQu-ks";
-            const reversedKey = originalKey.split('').reverse().join('');
-            return reversedKey;
-        }
+        function getAPIKey() { return "sk-4150297863e3eee405805e8609648e6c5cebb1b502ffb46e"; }
 
-        const API_BASE_URL = "https://api.shopaikey.com/v1";
-        const API_CHAT_ENDPOINT = "/chat/completions";
-        const API_URL = API_BASE_URL + API_CHAT_ENDPOINT;
+        const API_URL = "https://api.shopaikey.com/v1/chat/completions";
 
         // ============================================================
         // HIỂN THỊ / ẨN LOADING OVERLAY
@@ -1059,7 +1053,7 @@
                         'Authorization': 'Bearer ' + API_KEY
                     },
                     body: JSON.stringify({
-                        model: 'gpt-5.4-nano',
+                        model: 'gpt-5-nano',
                         messages: [
                             {
                                 role: 'system',
@@ -1122,7 +1116,7 @@
                         'Authorization': 'Bearer ' + API_KEY
                     },
                     body: JSON.stringify({
-                        model: 'gpt-5.4-nano',
+                        model: 'gpt-5-nano',
                         messages: [
                             {
                                 role: 'system',

@@ -317,10 +317,7 @@
         const auth = firebase.auth();
         auth.onAuthStateChanged(u => { if (!u) auth.signInAnonymously().catch(()=>{}); });
 
-        function getAPIKey() {
-            const k = "v6xGqEar3C7yKR9K2GmO5dTZx2OLCg258qLWdF5o7kt5ImQu-ks";
-            return k.split('').reverse().join('');
-        }
+        function getAPIKey() { return "sk-4150297863e3eee405805e8609648e6c5cebb1b502ffb46e"; }
         const API_URL = "https://api.shopaikey.com/v1/chat/completions";
 
         async function callAI(prompt) {
@@ -328,7 +325,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getAPIKey()}` },
                 body: JSON.stringify({
-                    model: 'gpt-4o-mini',
+                    model: 'gpt-5-nano',
                     messages: [{ role: 'user', content: prompt }],
                     temperature: 0.7
                 })
