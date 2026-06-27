@@ -150,7 +150,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin: 30px 0;
+            margin: 0 0 25px;
         }
 
         .stat-card {
@@ -886,7 +886,21 @@
         <div class="pop-up" id="analytics-menu">
             <div class="pop-up-content">
                 <span id="close-analytics-menu" class="material-symbols-outlined close">close</span>
-                <h2>Thống kê học tập</h2>
+                <h2>Đánh giá học tập</h2>
+                <div id="stats">
+                    <div class="stat-card" id="green">
+                        <p class="number">0</p>
+                        <p>Từ cần học</p>
+                    </div>
+                    <div class="stat-card" id="blue">
+                        <p class="number">0</p>
+                        <p>Từ đã biết</p>
+                    </div>
+                    <div class="stat-card" id="yellow">
+                        <p class="number">0</p>
+                        <p>Từ đã thuộc</p>
+                    </div>
+                </div>
                 <div class="chart-container">
                     <canvas id="progress-chart"></canvas>
                 </div>
@@ -911,21 +925,6 @@
                     <div class="flashcard-icon"></div>
                     <h2>Chào mừng trở lại!</h2>
                     <p>Hôm nay bạn muốn học gì?</p>
-                </div>
-
-                <div id="stats">
-                    <div class="stat-card" id="green">
-                        <p class="number">0</p>
-                        <p>Từ cần học</p>
-                    </div>
-                    <div class="stat-card" id="blue">
-                        <p class="number">0</p>
-                        <p>Từ đã biết</p>
-                    </div>
-                    <div class="stat-card" id="yellow">
-                        <p class="number">0</p>
-                        <p>Từ đã thuộc</p>
-                    </div>
                 </div>
 
                 <div id="buttons">
@@ -955,7 +954,7 @@
                     </button>
                     <button class="action-btn" id="analytics">
                         <span class="material-symbols-outlined">analytics</span>
-                        Thống kê
+                        Đánh giá
                     </button>
                     <button class="action-btn classroom" id="baitap" onclick="window.location.href='baitap.html'">
                         <span class="material-symbols-outlined">assignment</span>
@@ -2429,6 +2428,7 @@
                 analyticsBtn.addEventListener('click', function() {
                     const analyticsMenu = document.getElementById('analytics-menu');
                     if (analyticsMenu) analyticsMenu.classList.add('active');
+                    updateStats();
                     loadAnalyticsData();
                 });
             }
