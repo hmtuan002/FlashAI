@@ -439,7 +439,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getAPIKey()}` },
                 body: JSON.stringify({
-                    model: 'gpt-5-nano',
+                    model: 'gpt-5.4-nano',
                     messages: [{ role: 'user', content: prompt }],
                     temperature: 0.7
                 })
